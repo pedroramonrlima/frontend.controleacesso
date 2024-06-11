@@ -1,19 +1,21 @@
+import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import Sidebar from './components/sidebar/Sidebar';
 import Usuario from './pages/usuario/Usuario';
 import Footer from './components/footer/Footer';
+import Navigator from './components/navigator/Navigator';
 
-function App() {
+const App = () => {
   return (
-    <div className="container">
-      <Sidebar />
-      <div className="page-box">
-        <Usuario />
-        <Footer />
+    <Router>
+      <div className="container">
+        <Sidebar />
+        <Navigator />
       </div>
-    </div>
+    </Router>
   );
-}
+};
+
 
 export default App;

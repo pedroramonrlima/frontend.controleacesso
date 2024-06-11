@@ -15,7 +15,7 @@ const Sidebar = () => {
             <nav className="menu-opcoes-box">
                 <ul>
                     <MenuItem icon={faHouse} text="Dashboard" route="/" />
-                    <MenuItem icon={faBook} text="Requisições de Acesso" route="/requisitions" isActive/>
+                    <MenuItem icon={faBook} text="Requisições de Acesso" route="/requisitions"/>
                     <MenuItem icon={faUser} text="Solicitar Usuário" route="/request-user" />
                     <MenuItem icon={faThumbsUp} text="Aprovar/Reprovar" route="/approve-reject" />
                 </ul>
