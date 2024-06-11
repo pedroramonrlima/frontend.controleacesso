@@ -1,7 +1,6 @@
 *{
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   padding: 0;
@@ -16,6 +15,61 @@ body {
   align-content: center;
 }
 
+.menu-lateral-box {
+  flex: 0.2;
+  height: 100vh;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0 10px;
+}
+
+.menu-lateral-box .logo {
+  text-align: center;
+}
+
+.menu-lateral-box .logo img {
+  width: 200px;
+  margin-bottom: 1rem;
+}
+
+.menu-lateral-box ul {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-lateral-box ul a {
+  list-style-type: none;
+    cursor: pointer;
+    user-select: none;
+    color: #25396f;
+    margin-bottom: 10px;
+    padding: .7rem 1rem;
+    border-radius: .5rem;
+    width: 80%;
+    text-decoration: none;
+}
+
+.menu-lateral-box ul a:hover {
+  background-color: rgba(96, 114, 134, 0.637);
+  margin-left: 20px;
+}
+
+.menu-lateral-box li span {
+  margin-left: 10px;
+}
+
+.menu-lateral-box .active {
+  background-color: #25396f;
+  color: white;
+}
+
+.menu-lateral-box .active:hover {
+  background-color: #25396f;
+  color: white;
+}
+
 .page-box {
   display: flex;
   flex-direction: column;
@@ -25,11 +79,21 @@ body {
   background-color: #f2f7ff;
   font-weight: 700;
   color: #25396f;
-  padding: 2rem 2rem 0rem 2rem;
+  padding: 2rem 2rem .1rem 2rem;
 }
 
 .page-box .page-box-container {
-    flex: 1;
-    background-color: white;
-    padding: 30px;
+  flex: 1;
+  background-color: white;
+  padding: 30px;
 } 
+
+.page-box .footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; 
+  padding: 10px;
+  
+}
+.page-box .footer div {
+}

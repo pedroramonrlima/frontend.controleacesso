@@ -1,12 +1,12 @@
 import React from "react";
 
-const Usuario = () => {
+const Aprovacao = () => {
     return (
         <>
             <div></div>
             <section className="page-box-title">
                 <h2>Solicitação de usuário</h2>
-                <h4>Formulário para solicitação de usuário de rede</h4>
+                <h4>Permite o usuário aprovar e reprovar solicitações de acesso de sua responsabilidade</h4>
             </section>
             <section className="page-box-container">
                 <h1>Conteudo</h1>
@@ -15,4 +15,4 @@ const Usuario = () => {
     );
 }
 
-export default Usuario;
+export default Aprovacao;

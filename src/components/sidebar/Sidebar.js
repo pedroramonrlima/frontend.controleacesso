@@ -1,6 +1,5 @@
 import React from "react";
 import { faHouse, faBook, faUser, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import './sidebar.css';
 import MenuItem from "../manuitem/MenuItem";
 
 const Sidebar = () => {
@@ -15,9 +14,9 @@ const Sidebar = () => {
             <nav className="menu-opcoes-box">
                 <ul>
                     <MenuItem icon={faHouse} text="Dashboard" route="/" />
-                    <MenuItem icon={faBook} text="Requisições de Acesso" route="/requisitions"/>
-                    <MenuItem icon={faUser} text="Solicitar Usuário" route="/request-user" />
-                    <MenuItem icon={faThumbsUp} text="Aprovar/Reprovar" route="/approve-reject" />
+                    <MenuItem icon={faUser} text="Solicitar Usuário" route="/solicitacao-usuario" />
+                    <MenuItem icon={faBook} text="Requisições de Acesso" route="/requisicao-acesso"/>
+                    <MenuItem icon={faThumbsUp} text="Aprovar/Reprovar" route="/aprovacao-reprovacao" />
                 </ul>
             </nav>
         </div>
