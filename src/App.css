@@ -84,8 +84,12 @@ body {
 
 .page-box .page-box-container {
   flex: 1;
-  background-color: white;
-  padding: 30px;
+    background-color: white;
+    padding: 30px;
+    display: flex;
+    align-content: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
 } 
 
 .page-box .footer {
@@ -96,4 +100,104 @@ body {
   
 }
 .page-box .footer div {
+}
+
+/* Estilo da div que contém o input e o label */
+.input-field {
+  position: relative;
+  margin: 1.5rem;
+  flex: 1 1 calc(33.33% - 3rem);
+  /* 3 inputs por linha, considerando a margem */
+  box-sizing: border-box;
+}
+
+/* Estilo do input */
+.input-field input {
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  transition: border-color 0.3s;
+}
+
+/* Estilo do input focado */
+.input-field input:focus {
+  border-bottom: 2px solid #25396f;
+}
+
+.input-field input[type="text"][disabled] {
+  background-color: transparent;
+}
+
+/* Estilo do label */
+.input-field label {
+  color: #9e9e9e;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1rem;
+  transition: transform 0.2s ease-in-out, font-size 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+/* Estilo do label quando o input está focado ou preenchido */
+.input-field input:focus+label,
+.input-field input:not(:placeholder-shown)+label {
+  transform: translateY(-1.5rem);
+  font-size: 0.8rem;
+  color: #25396f;
+}
+
+.form-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  margin: 1.5rem;
+  width: 100%;
+}
+
+.form-group label {
+  /* flex: 0 0 150px; */
+  font-weight: bold;
+}
+
+.form-group input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  margin-left: 10px;
+  background-color: #72AFD4;
+}
+
+
+.form-group input:focus {
+  outline: none;
+  border-color: #25396f;
+}
+
+.form-group .form-control-static {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid transparent;
+  background-color: #f7f7f7;
+  border-radius: 4px;
+}
+
+.form-group .form-control-static:focus {
+  outline: none;
+  border-color: transparent;
+}
+
+.btn-box {
+  flex: 1;
+  background-color: yellow;
 }
