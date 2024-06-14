@@ -157,6 +157,7 @@ body {
   align-items: center;
   margin-bottom: 15px;
   margin: 1.5rem;
+  width: 100%;
 }
 
 .form-group label {
@@ -190,6 +191,38 @@ body {
   border-color: transparent;
 }
 
+.btn-box {
+  flex: 1;
+  /* background-color: yellow; */
+  display: flex;
+  flex-direction: row;
+  align-content: flex-end;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.btn-box button {
+  padding: 10px;
+  border-radius: 15px;
+  width: 27%;
+  background-color: #25396f;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s, background-color 0.1s;
+}
+
+.btn-box button:hover {
+  background-color: #112869;
+}
+
+.btn-box button:active {
+  transform: scale(0.95);
+  background-color: #0f214d;
+}
+
 /* Estilos para telas maiores */
 @media(min-width: 768px) {
   .container {
@@ -218,5 +251,9 @@ body {
 
   .input-field {
       flex: 1 1 calc(33.33% - 3rem);
+  }
+
+  .btn-box button {
+    width: 13%;
   }
 }
