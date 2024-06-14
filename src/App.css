@@ -87,9 +87,10 @@ body {
     background-color: white;
     padding: 30px;
     display: flex;
-    align-content: flex-start;
+    align-content: center;
     justify-content: center;
     flex-wrap: wrap;
+    flex-direction: column;
 } 
 
 .page-box .footer {
@@ -199,5 +200,32 @@ body {
 
 .btn-box {
   flex: 1;
-  background-color: yellow;
+  /* background-color: yellow; */
+  display: flex;
+  flex-direction: row;
+  align-content: flex-end;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.btn-box button {
+  padding: 10px;
+  border-radius: 15px;
+  width: 13%;
+  background-color: #25396f;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s, background-color 0.1s;
+}
+
+.btn-box button:hover {
+  background-color: #112869;
+}
+
+.btn-box button:active {
+  transform: scale(0.95);
+  background-color: #0f214d;
 }
