@@ -45,7 +45,7 @@ const Usuario = () => {
                         <label for="input7">Matricula</label>
                     </div>
                 </div>
-                <div className="btn-box">
+                <div className="btn-box center">
                         <button>Solicitar Acesso</button>
                     </div>
             </section>

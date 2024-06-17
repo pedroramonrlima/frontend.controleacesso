@@ -1,4 +1,9 @@
 /* Estilos Mobile First */
+
+*{
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -59,6 +64,11 @@ body {
 }
 
 .menu-opcoes-box .active {
+  background-color: #25396f;
+  color: white;
+}
+
+.menu-opcoes-box .active:hover {
   background-color: #25396f;
   color: white;
 }
@@ -202,6 +212,15 @@ body {
   justify-content: center;
 }
 
+.btn-box-right {
+  justify-content: right;
+  margin-right: 1.5rem;
+} 
+
+.btn-box-left {
+  justify-content: left;
+} 
+
 .btn-box button {
   padding: 10px;
   border-radius: 15px;
@@ -238,6 +257,10 @@ body {
 
   .menu-opcoes-box {
       display: block;
+  }
+
+  .menu-opcoes-box ul a:hover {
+    margin-left: 20px;
   }
 
   .menu-toggle {

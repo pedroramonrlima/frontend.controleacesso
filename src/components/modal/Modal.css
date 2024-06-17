@@ -1,0 +1,82 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal .modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 70%;
+  max-width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  position: relative;
+  /* transition: opacity 400ms, transform 400ms; */
+}
+
+.modal .modal-header,
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.modal .modal-title {
+  margin: 0;
+}
+
+.modal .button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.modal .button:hover {
+  background: #0056b3;
+}
+
+.modal .close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal .close-button:hover {
+  color: red;
+}
+
+.modal .close-button:active {
+  transform: scale(0.95);
+}
+
+.modal-content-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.modal-content-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 400ms, transform 400ms;
+}
+.modal-content-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+.modal-content-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 400ms, transform 400ms;
+}

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { faHouse, faBook, faUser, faThumbsUp, faBars } from '@fortawesome/free-solid-svg-icons';
 import MenuItem from "../manuitem/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Logo from "../../assets/dev7.jpg"
 
 const Sidebar = () => {
     const [show, setShow] = useState(false);
@@ -45,7 +46,7 @@ const Sidebar = () => {
         <div className="menu-lateral-box">
             <div className="logo">
                 <img
-                    src="https://scontent-gru1-1.xx.fbcdn.net/v/t39.30808-6/307093994_790794288795118_2285183251695484638_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=OQv_ac01c5UQ7kNvgH07-fx&_nc_ht=scontent-gru1-1.xx&oh=00_AYCbZsv4ShO2s4qzJNJHk-mcldsWmLNw7g3NChRt-A6O7g&oe=666E3AE1"
+                    src={Logo}
                     alt="Logo"
                 />
             </div>

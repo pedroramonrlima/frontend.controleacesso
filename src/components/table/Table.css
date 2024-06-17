@@ -1,6 +1,6 @@
 .table-container {
     width: 100%;
-    margin: 20px;
+    margin: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -25,6 +25,7 @@
 .styled-table th, .styled-table td {
     padding: 12px 15px;
     cursor: pointer;
+    position: relative;
 }
 
 .styled-table tbody tr {
@@ -39,7 +40,56 @@
     border-bottom: 2px solid #25396f;
 }
 
-.styled-table tbody tr.active-row {
-    font-weight: bold;
-    color: black;
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filter-icon {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.column-name {
+    flex-grow: 1;
+    text-align: left;
+    cursor: pointer;
+}
+
+.sort-icon {
+    margin-left: 10px;
+}
+
+.filter-input {
+    margin-top: 5px;
+    width: calc(100% - 24px);
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.pagination {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination button {
+    padding: 8px 16px;
+    margin: 0 4px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+    border-radius: 4px;
+}
+
+.pagination button:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
 }
