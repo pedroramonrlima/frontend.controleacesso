@@ -71,7 +71,8 @@
     margin-bottom: 20px;
 }
 
-.container-requisicao .available-access, .selected-access {
+.container-requisicao .available-access,
+.selected-access {
     /* overflow-y: auto;
     height: 458.812px; */
     flex: 1;
@@ -85,14 +86,16 @@
     margin-right: 0;
 }
 
-.container-requisicao .available-access ul, .selected-access ul {
+.container-requisicao .available-access ul,
+.selected-access ul {
     list-style: none;
     padding: 0;
     overflow-y: auto;
     height: 372px;
 }
 
-.container-requisicao .available-access li, .selected-access li {
+.container-requisicao .available-access li,
+.selected-access li {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -104,11 +107,13 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.container-requisicao .available-access li:last-child, .selected-access li:last-child {
+.container-requisicao .available-access li:last-child,
+.selected-access li:last-child {
     margin-bottom: 0;
 }
 
-.container-requisicao .add-access, .remove-access {
+.container-requisicao .add-access,
+.remove-access {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -116,7 +121,8 @@
     font-size: 20px;
 }
 
-.container-requisicao .add-access:active, .container-requisicao .remove-access:active {
+.container-requisicao .add-access:active,
+.container-requisicao .remove-access:active {
     transform: scale(0.95);
 }
 
@@ -131,20 +137,38 @@
     font-size: 16px;
 }
 
-.item-enter {
-    opacity: 0;
+.container-requisicao .submit-button:active {
+    transform: scale(0.99);
+  }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.item-enter-active {
-    opacity: 1;
-    transition: opacity 300ms ease-in;
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
 }
 
-.item-exit {
-    opacity: 1;
+.fadeIn {
+    animation: fadeIn 0.5s forwards;
 }
 
-.item-exit-active {
-    opacity: 0;
-    transition: opacity 300ms ease-in;
+.fadeOut {
+    animation: fadeOut 0.5s forwards;
 }

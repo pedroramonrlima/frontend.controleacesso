@@ -4,11 +4,13 @@ import Dados, { acessos } from "./dados"
 import Modal from "../../components/modal/Modal";
 import { faSearch, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import "./Requisicao.css"
 
 const Requisicoes = () => {
     const [selecteds, setSelecteds] = useState([]);
+    const [animationClasses, setAnimationClasses] = useState({});
+    const [acessFilter, setAcessFilter] = useState(acessos);
+    const [filter, setFilter] = useState({pesquisa:"Pesquise"});
     const col = ['nome', 'cpf', "rg", 'status',];
     const dados = Dados;
     const [showModal, setShowModal] = useState(false);
@@ -18,13 +20,41 @@ const Requisicoes = () => {
 
     const handleAddAccessClick = (acesso) => {
         if (!selecteds.some(item => item.id === acesso.id)) {
+            setAnimationClasses(prev => ({ ...prev, [acesso.id]: 'fadeIn' }));
             setSelecteds([...selecteds, acesso]);
         }
     };
 
     const handleRemoveAccessClick = (acesso) => {
-        setSelecteds(selecteds.filter(item => item.id !== acesso.id));
+        setAnimationClasses(prev => ({ ...prev, [acesso.id]: 'fadeOut' }));
+        setTimeout(() => {
+            setSelecteds(selecteds.filter(item => item.id !== acesso.id));
+            setAnimationClasses(prev => {
+                const newClasses = { ...prev };
+                delete newClasses[acesso.id];
+                return newClasses;
+            });
+        }, 500);
     };
+
+    const handleSearchChange = (event) => {
+        const { name, value } = event.target;
+        
+        // Atualiza o filtro
+        setFilter(prevFilter => {
+            const updatedFilter = { ...prevFilter, [name]: value };
+            
+            // Filtra os acessos com base no valor atualizado do filtro
+            const filterAcesso = acessos.filter(acesso => 
+                acesso.name.toLowerCase().includes(value.toLowerCase()));
+            
+            // Atualiza o estado dos acessos filtrados
+            setAcessFilter(filterAcesso);
+    
+            return updatedFilter;
+        });
+    };
+    console.log(filter);
 
     return (
         <>
@@ -64,7 +94,7 @@ const Requisicoes = () => {
                     <div className="search-section">
                         <label htmlFor="pesquisa">Pesquisa:</label>
                         <div className="search-bar">
-                            <input type="text" id="pesquisa" placeholder="Device" />
+                            <input type="text" name="pesquisa" id="pesquisa" onChange={handleSearchChange} placeholder="Pesquise por nome do grupo" />
                             <button><FontAwesomeIcon icon={faSearch} /></button>
                         </div>
                     </div>
@@ -72,8 +102,8 @@ const Requisicoes = () => {
                         <div className="available-access">
                             <h2>Acessos Disponíveis</h2>
                             <ul>
-                                {acessos.map(acesso => (
-                                    <li key={acesso.id}>
+                                {acessFilter.map(acesso => (
+                                    <li key={acesso.id} className="fadeIn">
                                         {acesso.name}
                                         <button className="add-access" onClick={() => handleAddAccessClick(acesso)}>
                                             <FontAwesomeIcon icon={faPlus} /><i className="fa fa-plus"></i>
@@ -85,20 +115,12 @@ const Requisicoes = () => {
                         <div className="selected-access">
                             <h2>Acessos Selecionados</h2>
                             <ul>
-                                <TransitionGroup>
-                                    {selecteds.map(selected => (
-                                        <CSSTransition
-                                            key={selected.id}
-                                            timeout={300}
-                                            classNames="item"
-                                        >
-                                            <li key={selected.id}>
-                                                {selected.name}
-                                                <button onClick={() => handleRemoveAccessClick(selected)} className="remove-access"><FontAwesomeIcon icon={faTrash} /><i className="fa fa-trash"></i></button>
-                                            </li>
-                                        </CSSTransition>
-                                    ))}
-                                </TransitionGroup>
+                                {selecteds.map(selected => (
+                                    <li key={selected.id} className={animationClasses[selected.id]}>
+                                        {selected.name}
+                                        <button onClick={() => handleRemoveAccessClick(selected)} className="remove-access"><FontAwesomeIcon icon={faTrash} /><i className="fa fa-trash"></i></button>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>
