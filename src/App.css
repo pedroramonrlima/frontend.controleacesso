@@ -1,13 +1,12 @@
 /* Estilos Mobile First */
 
-*{
+* {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
   padding: 0;
-  border: 0;
   font-family: Nunito, sans-serif;
 }
 
@@ -17,7 +16,6 @@ body {
 }
 
 .menu-lateral-box {
-  flex: 1;
   width: 100%;
   font-size: 1rem;
   padding: 0 10px;
@@ -26,11 +24,11 @@ body {
 
 .menu-lateral-box .logo {
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 .menu-lateral-box .logo img {
   width: 150px;
-  margin-bottom: 1rem;
 }
 
 .menu-opcoes-box {
@@ -39,36 +37,40 @@ body {
 
 .menu-opcoes-box ul {
   padding: 0;
+  margin: 0;
+  list-style: none;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.menu-opcoes-box ul a {
-  list-style-type: none;
-  cursor: pointer;
-  color: #25396f;
-  margin-bottom: 10px;
-  padding: .7rem 1rem;
-  border-radius: .5rem;
-  width: 80%;
-  text-decoration: none;
+.menu-opcoes-box ul li {
+  width: 100%;
 }
 
+.menu-opcoes-box ul li a,
+.menu-opcoes-box ul a {
+  display: flex;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  width: 100%;
+  text-decoration: none;
+  color: #25396f;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+}
+
+.menu-opcoes-box ul li a:hover,
 .menu-opcoes-box ul a:hover {
   background-color: rgba(96, 114, 134, 0.637);
 }
 
-.menu-opcoes-box li span {
+.menu-opcoes-box ul li span {
   margin-left: 10px;
 }
 
 .menu-opcoes-box .active {
-  background-color: #25396f;
-  color: white;
-}
-
-.menu-opcoes-box .active:hover {
   background-color: #25396f;
   color: white;
 }
@@ -85,6 +87,21 @@ body {
   color: #25396f;
 }
 
+.submenu {
+  display: none;
+  padding-left: 1rem;
+}
+
+.submenu a {
+  padding-left: 2rem;
+}
+
+.menu-opcoes-box ul li:hover .submenu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .page-box {
   display: flex;
   flex-direction: column;
@@ -94,7 +111,7 @@ body {
   background-color: #f2f7ff;
   font-weight: 700;
   color: #25396f;
-  padding: 2rem 2rem .1rem 2rem;
+  padding: 2rem 2rem 0.1rem 2rem;
 }
 
 .page-box .page-box-container {
@@ -105,12 +122,12 @@ body {
   align-content: flex-start;
   justify-content: center;
   flex-wrap: wrap;
-} 
+}
 
 .page-box .footer {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end; 
+  align-items: flex-end;
   padding: 10px;
 }
 
@@ -118,7 +135,6 @@ body {
   position: relative;
   margin: 1.5rem;
   flex: 1 1 calc(100% - 3rem);
-  box-sizing: border-box;
 }
 
 .input-field input {
@@ -133,10 +149,6 @@ body {
 
 .input-field input:focus {
   border-bottom: 2px solid #25396f;
-}
-
-.input-field input[type="text"][disabled] {
-  background-color: transparent;
 }
 
 .input-field label {
@@ -180,7 +192,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 16px;
   margin-left: 10px;
-  background-color: #72AFD4;
+  background-color: #72afd4;
 }
 
 .form-group input:focus {
@@ -188,22 +200,8 @@ body {
   border-color: #25396f;
 }
 
-.form-group .form-control-static {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid transparent;
-  background-color: #f7f7f7;
-  border-radius: 4px;
-}
-
-.form-group .form-control-static:focus {
-  outline: none;
-  border-color: transparent;
-}
-
 .btn-box {
   flex: 1;
-  /* background-color: yellow; */
   display: flex;
   flex-direction: row;
   align-content: flex-end;
@@ -213,13 +211,13 @@ body {
 }
 
 .btn-box-right {
-  justify-content: right;
+  justify-content: flex-end;
   margin-right: 1.5rem;
-} 
+}
 
 .btn-box-left {
-  justify-content: left;
-} 
+  justify-content: flex-start;
+}
 
 .btn-box button {
   padding: 10px;
@@ -243,37 +241,36 @@ body {
 }
 
 /* Estilos para telas maiores */
-@media(min-width: 768px) {
+@media (min-width: 768px) {
   .container {
-      flex-direction: row;
+    flex-direction: row;
   }
 
   .menu-lateral-box {
-      flex: 0.2;
-      height: 100vh;
-      width: 100%;
-      position: relative;
+    flex: 0.2;
+    height: 100vh;
   }
 
   .menu-opcoes-box {
-      display: block;
+    display: block;
   }
 
+  .menu-opcoes-box ul li a:hover,
   .menu-opcoes-box ul a:hover {
     margin-left: 20px;
   }
 
   .menu-toggle {
-      display: none;
+    display: none;
   }
 
   .page-box {
-      flex: 1;
-      padding: 2rem 2rem .1rem 2rem;
+    flex: 1;
+    padding: 2rem 2rem 0.1rem 2rem;
   }
 
   .input-field {
-      flex: 1 1 calc(33.33% - 3rem);
+    flex: 1 1 calc(33.33% - 3rem);
   }
 
   .btn-box button {
