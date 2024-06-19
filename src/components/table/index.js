@@ -3,7 +3,7 @@ import './Table.css';
 import { faArrowDownShortWide, faArrowUpShortWide, faFilter, faFilterCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Table = ({ columns, data, itemsPerPage = 10  }) => {
+const Table = ({ columns, data, itemsPerPage = 10 }) => {
     // State variables to manage filtering, sorting, and filtered data
     const [filterColumn, setFilterColumn] = useState(null); // Coluna atualmente selecionada para filtragem
     const [filterValue, setFilterValue] = useState(""); // Valor do filtro atual inserido pelo usuário
@@ -96,58 +96,62 @@ const Table = ({ columns, data, itemsPerPage = 10  }) => {
     const currentData = filteredData.slice(startIndex, endIndex);
 
     return (
+
         <div className="table-container">
-            <table className="styled-table">
-                <thead>
-                    <tr>
-                        {columns.map((column, index) => (
-                            <th key={index}>
-                                <div className="header-content">
+            <div className="styled-table">
+                <div className="table-header">
+                    {columns.map((column, index) => (
+                        <div className="header-cell" key={index}>
+                            <div className="header-content">
+                                <FontAwesomeIcon
+                                    icon={filterColumn === column ? faFilterCircleXmark : faFilter}
+                                    className="filter-icon"
+                                    onClick={() => handleFilterClick(column)}
+                                />
+                                <span className="column-name" onClick={() => handleSortClick(column)}>
+                                    {column.toUpperCase()}
+                                </span>
+                                {sortColumn === column && (
                                     <FontAwesomeIcon
-                                        icon={filterColumn === column ? faFilterCircleXmark : faFilter}
-                                        className="filter-icon"
-                                        onClick={() => handleFilterClick(column)}
-                                    />
-                                    <span className="column-name" onClick={() => handleSortClick(column)}>
-                                        {column.toUpperCase()}
-                                    </span>
-                                    {sortColumn === column && (
-                                        <FontAwesomeIcon
-                                            icon={sortDirection === 'asc' ? faArrowUpShortWide : faArrowDownShortWide}
-                                            className="sort-icon"
-                                        />
-                                    )}
-                                </div>
-                                {filterColumn === column && (
-                                    <input
-                                        type="text"
-                                        value={filterValue}
-                                        onChange={handleFilterChange}
-                                        className="filter-input"
-                                        placeholder={`Filtrar por ${column}`}
+                                        icon={sortDirection === 'asc' ? faArrowUpShortWide : faArrowDownShortWide}
+                                        className="sort-icon"
                                     />
                                 )}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentData.map((item, rowIndex) => (
-                        <tr key={rowIndex}>
-                            {columns.map((chave, cellIndex) => (
-                                <td key={`${rowIndex}-${chave}`}>{item[chave]}</td>
-                            ))}
-                        </tr>
+                            </div>
+                            {filterColumn === column && (
+                                <input
+                                    type="text"
+                                    value={filterValue}
+                                    onChange={handleFilterChange}
+                                    className="filter-input"
+                                    placeholder={`Filtrar por ${column}`}
+                                />
+                            )}
+                        </div>
                     ))}
-                </tbody>
-            </table>
+                </div>
+                <div className="table-body">
+                    {currentData.map((item, rowIndex) => (
+                        <div className="table-row" key={rowIndex}>
+                            {columns.map((chave, cellIndex) => (
+                                <div className="table-cell" key={`${rowIndex}-${chave}`}>
+                                    {item[chave]}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            </div>
             <div className="pagination">
                 <button onClick={prevPage} disabled={currentPage === 1}>Anterior</button>
                 <span>{currentPage} de {totalPages}</span>
                 <button onClick={nextPage} disabled={currentPage === totalPages}>Próxima</button>
             </div>
         </div>
+
+
     );
+
 }
 
 export default Table;

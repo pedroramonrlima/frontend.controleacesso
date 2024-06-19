@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from "react";
-import { faHouse, faBook, faUser, faThumbsUp, faBars } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from "react";
+import { faHouse, faBook, faUser, faThumbsUp, faBars, faUserGroup, faGear, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import MenuItem from "../manuitem/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "../../assets/dev7.jpg"
 
 const Sidebar = () => {
     const [show, setShow] = useState(false);
-    
+
     const handlerCick = () => {
         var menu = document.querySelector('.menu-opcoes-box');
         if (menu.style.display === 'block' || menu.style.display === '') {
@@ -32,15 +32,15 @@ const Sidebar = () => {
 
             }
         };
-    
+
         // Adiciona o event listener quando o componente é montado
         window.addEventListener('resize', handleResize);
-    
+
         // Remove o event listener quando o componente é desmontado para evitar vazamentos de memória
         return () => {
-          window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
         };
-      }, []);
+    }, []);
 
     return (
         <div className="menu-lateral-box">
@@ -51,11 +51,19 @@ const Sidebar = () => {
                 />
             </div>
             <nav className="menu-opcoes-box">
-                <ul>
+                <ul className="menu-opcoes-item menu-opcoes-list">
                     <MenuItem icon={faHouse} text="Dashboard" route="/" />
                     <MenuItem icon={faUser} text="Solicitar Usuário" route="/solicitacao-usuario" />
-                    <MenuItem icon={faBook} text="Requisições de Acesso" route="/requisicao-acesso"/>
+                    <MenuItem icon={faBook} text="Requisições de Acesso" route="/requisicao-acesso" />
                     <MenuItem icon={faThumbsUp} text="Aprovar/Reprovar" route="/aprovacao-reprovacao" />
+                    <a href="#">
+                        <li>
+                            <FontAwesomeIcon icon={faGear} /><span>Administração</span><FontAwesomeIcon icon={faChevronDown} />
+                            <ul>
+                                <MenuItem icon={faUserGroup} text="Grupos" route="/grupo-usuario" />
+                            </ul>
+                        </li>
+                    </a>
                 </ul>
             </nav>
             <button id="menu-toggle" className="menu-toggle" aria-label="Abrir menu" onClick={handlerCick}>

@@ -1,7 +1,7 @@
 import React from "react";
-import Table from "../../components/table";
+import Table from "../../../components/table";
 
-const Aprovacao = () => {
+const Grupo = () => {
     const col = ["id", "usuario","items","Ação"]
     const dados = [
         {
@@ -14,8 +14,8 @@ const Aprovacao = () => {
         <>
             <div></div>
             <section className="page-box-title">
-                <h2>Aprovação e Reprovação de Acesso</h2>
-                <h4>Permite o usuário aprovar e reprovar solicitações de acesso de sua responsabilidade</h4>
+                <h2>Grupos</h2>
+                <h4>Cadastro de Grupos do Active Directory no sistema de acesso.</h4>
             </section>
             <section className="page-box-container">
                 <Table columns={col} data={dados} />
@@ -24,4 +24,4 @@ const Aprovacao = () => {
     );
 }
 
-export default Aprovacao;
+export default Grupo;

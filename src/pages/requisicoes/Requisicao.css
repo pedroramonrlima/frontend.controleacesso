@@ -126,6 +126,14 @@
     transform: scale(0.95);
 }
 
+.container-requisicao .add-access:hover {
+    color: green;
+}
+
+.container-requisicao .remove-access:hover {
+    color: red;
+}
+
 .container-requisicao .submit-button {
     width: 100%;
     padding: 10px;
