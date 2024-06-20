@@ -45,14 +45,14 @@ const Table = ({ columns, data, itemsPerPage = 10 }) => {
 
     // Function to handle filter column click
     const handleFilterClick = (column) => {
-        if (filterColumn === column) {
+        if (filterColumn === column.key) {
             // Limpar filtro se a coluna clicada já for a coluna de filtro selecionada
             setFilterColumn(null);
             setFilterValue("");
             setFilteredData(data);
         } else {
             // Definir a coluna clicada como a nova coluna de filtro e redefinir os valores de filtro
-            setFilterColumn(column);
+            setFilterColumn(column.key);
             setFilterValue("");
             setFilteredData(data);
         }
@@ -74,18 +74,18 @@ const Table = ({ columns, data, itemsPerPage = 10 }) => {
     const handleSortClick = (column) => {
         let newSortDirection = 'asc'; // Direção de ordenação padrão
 
-        if (sortColumn === column) {
+        if (sortColumn === column.key) {
             // Inverter a direção de ordenação se a coluna clicada já for a coluna ordenada
             newSortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
         }
 
-        setSortColumn(column); // Atualizar o estado sortColumn com a coluna clicada
+        setSortColumn(column.key); // Atualizar o estado sortColumn com a coluna clicada
         setSortDirection(newSortDirection); // Atualizar o estado sortDirection com a nova direção
 
         // Classificar os dados filtrados com base na coluna e direção de ordenação atuais
         const sorted = [...filteredData].sort((a, b) => {
-            if (a[column] < b[column]) return newSortDirection === 'asc' ? -1 : 1;
-            if (a[column] > b[column]) return newSortDirection === 'asc' ? 1 : -1;
+            if (a[column.key] < b[column.key]) return newSortDirection === 'asc' ? -1 : 1;
+            if (a[column.key] > b[column.key]) return newSortDirection === 'asc' ? 1 : -1;
             return 0;
         });
 
@@ -96,7 +96,6 @@ const Table = ({ columns, data, itemsPerPage = 10 }) => {
     const currentData = filteredData.slice(startIndex, endIndex);
 
     return (
-
         <div className="table-container">
             <div className="styled-table">
                 <div className="table-header">
@@ -104,27 +103,27 @@ const Table = ({ columns, data, itemsPerPage = 10 }) => {
                         <div className="header-cell" key={index}>
                             <div className="header-content">
                                 <FontAwesomeIcon
-                                    icon={filterColumn === column ? faFilterCircleXmark : faFilter}
+                                    icon={filterColumn === column.key ? faFilterCircleXmark : faFilter}
                                     className="filter-icon"
                                     onClick={() => handleFilterClick(column)}
                                 />
                                 <span className="column-name" onClick={() => handleSortClick(column)}>
-                                    {column.toUpperCase()}
+                                    {column.alias.toUpperCase()}
                                 </span>
-                                {sortColumn === column && (
+                                {sortColumn === column.key && (
                                     <FontAwesomeIcon
                                         icon={sortDirection === 'asc' ? faArrowUpShortWide : faArrowDownShortWide}
                                         className="sort-icon"
                                     />
                                 )}
                             </div>
-                            {filterColumn === column && (
+                            {filterColumn === column.key && (
                                 <input
                                     type="text"
                                     value={filterValue}
                                     onChange={handleFilterChange}
                                     className="filter-input"
-                                    placeholder={`Filtrar por ${column}`}
+                                    placeholder={`Filtrar por ${column.alias}`}
                                 />
                             )}
                         </div>
@@ -133,9 +132,9 @@ const Table = ({ columns, data, itemsPerPage = 10 }) => {
                 <div className="table-body">
                     {currentData.map((item, rowIndex) => (
                         <div className="table-row" key={rowIndex}>
-                            {columns.map((chave, cellIndex) => (
-                                <div className="table-cell" key={`${rowIndex}-${chave}`}>
-                                    {item[chave]}
+                            {columns.map((column, cellIndex) => (
+                                <div className="table-cell" key={`${rowIndex}-${column.key}`}>
+                                    {item[column.key]}
                                 </div>
                             ))}
                         </div>
@@ -148,10 +147,7 @@ const Table = ({ columns, data, itemsPerPage = 10 }) => {
                 <button onClick={nextPage} disabled={currentPage === totalPages}>Próxima</button>
             </div>
         </div>
-
-
     );
-
 }
 
 export default Table;

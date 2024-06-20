@@ -1,8 +1,14 @@
 import React from "react";
 import Table from "../../components/table";
 
+const col = [
+    { key: 'id', alias: 'id' },
+    { key: 'usuario', alias: 'Usuário' },
+    { key: 'items', alias: 'Item' },
+    { key: 'action', alias: 'ação' },
+];
+
 const Aprovacao = () => {
-    const col = ["id", "usuario","items","Ação"]
     const dados = [
         {
         id: 1,

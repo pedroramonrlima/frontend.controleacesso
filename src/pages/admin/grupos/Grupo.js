@@ -2,7 +2,12 @@ import React from "react";
 import Table from "../../../components/table";
 
 const Grupo = () => {
-    const col = ["id", "usuario","items","Ação"]
+    const col = [
+        { key: 'id', alias: 'id' },
+        { key: 'usuario', alias: 'Usuário' },
+        { key: 'items', alias: 'Item' },
+        { key: 'action', alias: 'ação' },
+    ];
     const dados = [
         {
         id: 1,

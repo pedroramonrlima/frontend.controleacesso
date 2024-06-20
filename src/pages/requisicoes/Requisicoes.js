@@ -6,12 +6,17 @@ import { faSearch, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Requisicao.css"
 
+const columns = [
+    { key: 'nome', alias: 'Nome' },
+    { key: 'rg', alias: 'Idade' },
+    { key: 'cpf', alias: 'Cidade' },
+];
+
 const Requisicoes = () => {
     const [selecteds, setSelecteds] = useState([]);
     const [animationClasses, setAnimationClasses] = useState({});
     const [acessFilter, setAcessFilter] = useState(acessos);
     const [filter, setFilter] = useState({pesquisa:"Pesquise"});
-    const col = ['nome', 'cpf', "rg", 'status',];
     const dados = Dados;
     const [showModal, setShowModal] = useState(false);
 
@@ -68,7 +73,7 @@ const Requisicoes = () => {
                     <button onClick={openModal}>Criar Requisição</button>
                 </div>
 
-                <Table columns={col} data={dados} />
+                <Table columns={columns} data={dados} />
             </section>
             <Modal show={showModal} onClose={closeModal}>
                 <div className="container-requisicao">
