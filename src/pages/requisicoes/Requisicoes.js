@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Requisicao.css"
 
 const columns = [
-    { key: 'nome', alias: 'Nome' },
-    { key: 'rg', alias: 'Idade' },
-    { key: 'cpf', alias: 'Cidade' },
+    { key: 'nome', alias: 'Requisição' },
+    { key: 'rg', alias: 'Item' },
+    { key: 'cpf', alias: 'Quem solicitou' },
 ];
 
 const Requisicoes = () => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { faHouse, faBook, faUser, faThumbsUp, faBars, faUserGroup, faGear, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import MenuItem from "../manuitem/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Logo from "../../assets/dev7.jpg";
+import Logo from "../../assets/logo.png";
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);

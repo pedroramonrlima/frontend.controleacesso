@@ -23,6 +23,9 @@ const Grupo = () => {
                 <h4>Cadastro de Grupos do Active Directory no sistema de acesso.</h4>
             </section>
             <section className="page-box-container">
+                <div className="btn-box btn-box-right">
+                        <button>Cadastrar</button>
+                    </div>
                 <Table columns={col} data={dados} />
             </section>
         </>
