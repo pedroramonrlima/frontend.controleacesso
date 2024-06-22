@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../../../components/table";
+import Modal, { ModalSmall } from "../../../components/modal/Modal";
+import { faSearch, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Form from "../../../components/form/Form";
+// import "./grupo.css"
 
 const Grupo = () => {
+    const [showModal, setShowModal] = useState(false);
+
+    const openModal = () => setShowModal(true);
+    const closeModal = () => setShowModal(false);
+
     const col = [
         { key: 'id', alias: 'id' },
-        { key: 'usuario', alias: 'Usuário' },
-        { key: 'items', alias: 'Item' },
+        { key: 'name', alias: 'Nome' },
+        { key: 'dn', alias: 'DN Active Directory' },
         { key: 'action', alias: 'ação' },
     ];
     const dados = [
         {
-        id: 1,
-        usuario: "Pedro Ramon Rodrigues Lima",
-        items: "DEVICE_ALL / VPN / VPN-TI"
+            id: 1,
+            name: "DEVICE_ALL",
+            dn: "OU=GRUPOS,CN=MEUDOMINIO,CN=COM"
         }
-];
+    ];
     return (
         <>
             <div></div>
@@ -24,10 +34,13 @@ const Grupo = () => {
             </section>
             <section className="page-box-container">
                 <div className="btn-box btn-box-right">
-                        <button>Cadastrar</button>
-                    </div>
+                    <button onClick={openModal}>Cadastrar</button>
+                </div>
                 <Table columns={col} data={dados} />
             </section>
+            <Modal show={showModal} onClose={closeModal} title="Cadastrar Grupo" small >
+                <Form />
+            </Modal>
         </>
     );
 }

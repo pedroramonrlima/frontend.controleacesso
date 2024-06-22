@@ -3,15 +3,15 @@ import './Modal.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const Modal = ({ show, onClose, children, title, onFooter }) => {
+const Modal = ({ show, onClose, children, title = "Requisição de Acesso", onFooter, small }) => {
 
   return (
     <div className={`modal ${show ? 'show' : ''}`} onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
+      <div className={small ? "modal-content small" : "modal-content larg"} onClick={e => e.stopPropagation()}>
         <div className="modal-header">
-          {title && (
-            <h4 className="modal-title">{title}</h4>
-          )}
+          <div>
+            <h1 className="modal-title">{title}</h1>
+          </div>
           <button className="close-button" onClick={onClose}>
             <FontAwesomeIcon icon={faTimes} />
           </button>

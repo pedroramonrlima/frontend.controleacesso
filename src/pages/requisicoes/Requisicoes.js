@@ -77,7 +77,7 @@ const Requisicoes = () => {
             </section>
             <Modal show={showModal} onClose={closeModal}>
                 <div className="container-requisicao">
-                    <h1>Requisição de Acesso</h1>
+                    {/* <h1>Requisição de Acesso</h1> */}
                     <div className="user-info">
                         <div className="info">
                             <label htmlFor="usuario">Usuário:</label>

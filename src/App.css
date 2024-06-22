@@ -132,13 +132,13 @@ body {
   padding: 10px;
 }
 
-.input-field {
+.form-box .input-field {
   position: relative;
   margin: 1.5rem;
   flex: 1 1 calc(100% - 3rem);
 }
 
-.input-field input {
+.form-box .input-field input {
   border: none;
   border-bottom: 1px solid #9e9e9e;
   outline: none;
@@ -148,11 +148,11 @@ body {
   transition: border-color 0.3s;
 }
 
-.input-field input:focus {
+.form-box .input-field input:focus {
   border-bottom: 2px solid #25396f;
 }
 
-.input-field label {
+.form-box .input-field label {
   color: #9e9e9e;
   position: absolute;
   top: 0;
@@ -162,8 +162,8 @@ body {
   pointer-events: none;
 }
 
-.input-field input:focus + label,
-.input-field input:not(:placeholder-shown) + label {
+.form-box .input-field input:focus + label,
+.form-box .input-field input:not(:placeholder-shown) + label {
   transform: translateY(-1.5rem);
   font-size: 0.8rem;
   color: #25396f;
