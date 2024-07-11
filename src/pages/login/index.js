@@ -4,12 +4,14 @@ import { req } from '../../interceptors';
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useAuth } from '../../contexts/AuthContext';
 import "./login.css";
 
 const Login = () => {
     //const feedback = useFeedback();
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState({});
+    const { login } = useAuth();
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -20,6 +22,7 @@ const Login = () => {
             const dataFromToken = jwtDecode(token);
             if (dataFromToken) {
                 if (dataFromToken.login){
+                    login(dataFromToken);
                     navigate("/app");
                 }else {
                     throw new Error('Autenticação não está funcionando!');
