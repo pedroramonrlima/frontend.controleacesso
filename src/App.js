@@ -9,7 +9,11 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<AuthenticatedApp />} /> 
+        <Route path="/dashboard" element={<AuthenticatedApp />} />
+        <Route path="/requisicao-acesso" element={<AuthenticatedApp />} />
+        <Route path="/solicitacao-usuario" element={<AuthenticatedApp />} />
+        <Route path="/aprovacao-reprovacao" element={<AuthenticatedApp />} />
+        <Route path="/grupo-usuario" element={<AuthenticatedApp />} />
       </Routes>
     </Router>
   );
