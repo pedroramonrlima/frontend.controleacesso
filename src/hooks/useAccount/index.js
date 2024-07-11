@@ -13,10 +13,9 @@ export function useAccount() {
         const data = jwtDecode(token);
         if (data) {
           const accountData = {
-            account_id: data.id,
             login: data.login,
-            profile_id: data.profileid,
-            employee_id: data.employeeid
+            group: data.group,
+            name: data.name
           }
           setAccount(accountData);
         } else {

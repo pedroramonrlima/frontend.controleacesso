@@ -49,17 +49,17 @@ const Sidebar = () => {
       </div>
       <nav className="menu-opcoes-box">
         <ul className="menu-opcoes-item menu-opcoes-list">
-          <MenuItem icon={faHouse} text="Dashboard" route="/" />
-          <MenuItem icon={faUser} text="Solicitar Usuário" route="/solicitacao-usuario" />
-          <MenuItem icon={faBook} text="Requisições de Acesso" route="/requisicao-acesso" />
-          <MenuItem icon={faThumbsUp} text="Aprovar/Reprovar" route="/aprovacao-reprovacao" />
+          <MenuItem icon={faHouse} text="Dashboard" route="/app" />
+          <MenuItem icon={faUser} text="Solicitar Usuário" route="/app/solicitacao-usuario" />
+          <MenuItem icon={faBook} text="Requisições de Acesso" route="/app/requisicao-acesso" />
+          <MenuItem icon={faThumbsUp} text="Aprovar/Reprovar" route="/app/aprovacao-reprovacao" />
           <li>
             <a href="#" onClick={toggleSubmenu}>
               <FontAwesomeIcon icon={faGear} /><span>Administração</span><FontAwesomeIcon icon={faChevronDown} />
             </a>
             {showSubmenu && (
               <ul className="submenu">
-                <MenuItem icon={faUserGroup} text="Grupos" route="/grupo-usuario" />
+                <MenuItem icon={faUserGroup} text="Grupos" route="/app/grupo-usuario" />
               </ul>
             )}
           </li>
