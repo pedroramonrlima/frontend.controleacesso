@@ -10,18 +10,18 @@ import Grupo from "../../pages/admin/grupos/Grupo";
 
 
 const Navigator = () => {
-    return (
-      <div className="page-box">
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/requisicao-acesso" element={<Requisicoes />} />
-          <Route path="/solicitacao-usuario" element={<Usuario />} />
-          <Route path="/aprovacao-reprovacao" element={<Aprovacao />} />
-          <Route path="/grupo-usuario" element={<Grupo />} />
-        </Routes>
-        <Footer />
-      </div>
-    );
-  };
+  return (
+    <div className="page-box">
+      <Routes>
+        <Route path="/requisicao-acesso" element={<Requisicoes />} />
+        <Route path="/solicitacao-usuario" element={<Usuario />} />
+        <Route path="/aprovacao-reprovacao" element={<Aprovacao />} />
+        <Route path="/grupo-usuario" element={<Grupo />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
+};
 
-  export default Navigator;
+export default Navigator;

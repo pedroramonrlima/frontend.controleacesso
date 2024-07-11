@@ -1,0 +1,92 @@
+.container-login {
+    display: flex;
+    width: 100%;
+    height: 100%; /* Certifique-se de que o container ocupa toda a altura da viewport */
+    flex-direction: row;
+}
+
+.container-login .left {
+    background-color: #25396f;
+    /* background-image: url("background.jpg"); */
+    background-position: center;
+    background-size: cover;
+    width: 40%;
+    height: 100%;
+}
+
+.container-login .right {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Certifique-se de que a altura é 100% para ocupar toda a altura do container */
+}
+
+.container-login .login-box {
+    width: 300px;
+    text-align: center;
+}
+
+.container-login .login-box img {
+    width: 100%;
+    max-width: 200px;
+}
+
+.container-login .login-box h2 {
+    margin-bottom: 10px;
+}
+
+.container-login .login-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container-login .login-box input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.container-login .login-box button {
+    padding: 10px;
+    background-color: rgba(93, 68, 165, 1);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.container-login .login-box button:hover {
+    background-color: #4828a8;
+}
+
+@media (max-width: 768px) {
+    .container-login {
+        flex-direction: column;
+    }
+    .container-login .left, .container-login .right {
+        width: 100%;
+        height: 50%;
+    }
+    .container-login .login-box {
+        width: 80%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-login .left {
+        display: none;
+    }
+    .container-login .right {
+        width: 100%;
+        height: 100%;
+    }
+    .container-login .login-box {
+        width: 90%;
+        max-width: 300px;
+    }
+}
