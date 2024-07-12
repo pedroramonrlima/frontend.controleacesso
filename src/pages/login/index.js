@@ -11,7 +11,7 @@ const Login = () => {
     //const feedback = useFeedback();
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState({});
-    const { login } = useAuth();
+    const { login, logout } = useAuth();
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -59,6 +59,7 @@ const Login = () => {
             }
         }
         removeTokenIfExists();
+        logout();
     }, []);
 
     return (

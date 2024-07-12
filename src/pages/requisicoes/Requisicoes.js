@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Table from "../../components/table";
-import Dados, { acessos } from "./dados"
 import Modal from "../../components/modal/Modal";
+import Alert from "../../components/alert/Alert";
 import { faSearch, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {req} from "../../interceptors"
@@ -21,11 +21,11 @@ const Requisicoes = () => {
     const [groups,setGroups] = useState([]);
     const [selecteds, setSelecteds] = useState([]);
     const [animationClasses, setAnimationClasses] = useState({});
-    const [acessFilter, setAcessFilter] = useState(acessos);
+    const [acessFilter, setAcessFilter] = useState([]);
     const [filter, setFilter] = useState({pesquisa:"Pesquise"});
-    const dados = Dados;
     const [showModal, setShowModal] = useState(false);
     const [sync, setSync] = useState(false);
+    const [alert, setAlert] = useState({ message: "", errors: [], type: "" }); 
 
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
@@ -57,9 +57,9 @@ const Requisicoes = () => {
             const updatedFilter = { ...prevFilter, [name]: value };
             
             // Filtra os acessos com base no valor atualizado do filtro
-            const filterAcesso = acessos.filter(acesso => 
-                acesso.name.toLowerCase().includes(value.toLowerCase()));
-            
+            const filterAcesso = groups.filter(group => 
+                group.name.toLowerCase().includes(value.toLowerCase()));
+
             // Atualiza o estado dos acessos filtrados
             setAcessFilter(filterAcesso);
     
@@ -74,12 +74,38 @@ const Requisicoes = () => {
         console.log("Clicksss",requests);
 
         try {
-            console.log(await req.post("AcesseRequest", requests));
+            const {data} = await req.post("AcesseRequest", requests);
+            console.log();
             setSelecteds([]);
             setShowModal(false);
             setSync(!sync);
+            if(data.errors) {
+                setAlert({
+                    message: "A requisição foi gerada, porém alguns itens não foram criados devido aos seguintes problemas:",
+                    errors: data.errors,
+                    type: "warning"
+                  }); 
+            }else {
+                setAlert({ message: "Requisição enviada com sucesso!", type: "success" });
+            }
         } catch (error) {
-            console.log(error);
+            const {errors} = error.response.data;
+            if(errors){
+                setAlert({
+                    message: "Erro ao enviar requisição",
+                    errors: errors,
+                    type: "error"
+                  }); 
+            }else {
+                setAlert({ 
+                    message: "Erro ao enviar requisição", 
+                    errors:["Ouve algum erro ao tentar enviar a requisição, entre em contato com o administrador do sistema"],
+                    type: "success" 
+                });
+            }
+
+            setSelecteds([]);
+            setShowModal(false);
         }
     }
     //console.log(filter);
@@ -100,22 +126,6 @@ const Requisicoes = () => {
             }
         }
 
-        // async function loadEmployee() {
-        //     try {
-        //         const {data} = await req.get("AcesseRequest");
-        //         let dados = data.map(item => ({
-        //             id: item.id,
-        //             item: item.acesseRequest.groupAd.name,
-        //             requestName: item.requesterEmployee.name,
-        //             status: item.status.name,
-        //         }));
-        //         setAcesseRequets(dados);
-
-        //     } catch (e) {
-        //         console.log(e);
-        //     }
-        // }
-
         async function loadGroup() {
             try {
                 const {data} = await req.get("Group");
@@ -131,13 +141,18 @@ const Requisicoes = () => {
               const [request, group] = await Promise.all([loadAcesseRequest(), loadGroup()]);
               setAcesseRequets(request);
               setAcessFilter(group);
+              setGroups(group);
             } catch(e) {
               console.log(e);
             }
           }
           loadDefaultData();
     },[sync])
-console.log(groups);
+    
+    const closeAlert = () => {
+        setAlert({ message: "", errors: [], type: "" });
+      };
+
     return (
         <>
             <div></div>
@@ -152,6 +167,8 @@ console.log(groups);
 
                 <Table columns={columns} data={acesseRequets} />
             </section>
+            <Alert message={alert.message} errors={alert.errors} type={alert.type} onClose={closeAlert} />
+
             <Modal show={showModal} onClose={closeModal}>
                 <div className="container-requisicao">
                     {/* <h1>Requisição de Acesso</h1> */}

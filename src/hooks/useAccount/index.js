@@ -9,14 +9,17 @@ export function useAccount() {
 
   useEffect(() => {
     if (user) {
-      //console.log("useraccount", user);
+      console.log("useraccount", user);
       const accountData = {
         login: user.login,
         name: user.name,
         title: user.title,
         id: user.id,
         manager: user.manager,
-        departament: user.departament
+        departament: user.departament,
+        isAdmin: user.isAdmin,
+        isManager: user.isManager,
+        isSpecialist: user.isSpecialist
       };
       setAccount(accountData);
     } else {

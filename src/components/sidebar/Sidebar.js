@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { faHouse, faBook, faUser, faThumbsUp, faBars, faUserGroup, faGear, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import MenuItem from "../manuitem/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAccount } from "../../hooks/useAccount";
 import Logo from "../../assets/logo.png";
 
 const Sidebar = () => {
+  const user = useAccount();
   const [show, setShow] = useState(false);
   const [showSubmenu, setShowSubmenu] = useState(false);
 
@@ -52,17 +54,21 @@ const Sidebar = () => {
           <MenuItem icon={faHouse} text="Dashboard" route="/app" />
           <MenuItem icon={faUser} text="Solicitar Usuário" route="/app/solicitacao-usuario" />
           <MenuItem icon={faBook} text="Requisições de Acesso" route="/app/requisicao-acesso" />
-          <MenuItem icon={faThumbsUp} text="Aprovar/Reprovar" route="/app/aprovacao-reprovacao" />
-          <li>
-            <a href="#" onClick={toggleSubmenu}>
-              <FontAwesomeIcon icon={faGear} /><span>Administração</span><FontAwesomeIcon icon={faChevronDown} />
-            </a>
-            {showSubmenu && (
-              <ul className="submenu">
-                <MenuItem icon={faUserGroup} text="Grupos" route="/app/grupo-usuario" />
-              </ul>
-            )}
-          </li>
+          {(user.isManager || user.isSpecialist) && (
+            <MenuItem icon={faThumbsUp} text="Aprovar/Reprovar" route="/app/aprovacao-reprovacao" />
+          )}
+          {user.isAdmin && (
+            <li>
+              <a href="#" onClick={toggleSubmenu}>
+                <FontAwesomeIcon icon={faGear} /><span>Administração</span><FontAwesomeIcon icon={faChevronDown} />
+              </a>
+              {showSubmenu && (
+                <ul className="submenu">
+                  <MenuItem icon={faUserGroup} text="Grupos" route="/app/grupo-usuario" />
+                </ul>
+              )}
+            </li>
+          )}
         </ul>
       </nav>
       <button id="menu-toggle" className="menu-toggle" aria-label="Abrir menu" onClick={handlerClick}>
