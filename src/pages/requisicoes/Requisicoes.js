@@ -25,6 +25,7 @@ const Requisicoes = () => {
     const [filter, setFilter] = useState({pesquisa:"Pesquise"});
     const dados = Dados;
     const [showModal, setShowModal] = useState(false);
+    const [sync, setSync] = useState(false);
 
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
@@ -65,7 +66,23 @@ const Requisicoes = () => {
             return updatedFilter;
         });
     };
-    console.log(filter);
+
+    async function onSubmit(){
+        let requests = {
+            groupAds: selecteds
+        };
+        console.log("Clicksss",requests);
+
+        try {
+            console.log(await req.post("AcesseRequest", requests));
+            setSelecteds([]);
+            setShowModal(false);
+            setSync(!sync);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    //console.log(filter);
     useEffect(() => {
         async function loadAcesseRequest() {
             try {
@@ -119,7 +136,7 @@ const Requisicoes = () => {
             }
           }
           loadDefaultData();
-    },[])
+    },[sync])
 console.log(groups);
     return (
         <>
@@ -189,7 +206,7 @@ console.log(groups);
                             </ul>
                         </div>
                     </div>
-                    <button className="submit-button">Solicitar Acesso</button>
+                    <button onClick={()=> onSubmit()} className="submit-button">Solicitar Acesso</button>
                 </div>
             </Modal>
         </>
