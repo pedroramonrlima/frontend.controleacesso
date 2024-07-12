@@ -14,11 +14,14 @@ const Table = ({ columns, data, itemsPerPage = 10 }) => {
     // Estado para controle de paginação
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(Math.ceil(data.length / itemsPerPage));
-
     // Atualizar o total de páginas quando os dados filtrados mudarem
     useEffect(() => {
         setTotalPages(Math.ceil(filteredData.length / itemsPerPage));
     }, [filteredData, itemsPerPage]);
+
+    useEffect(() => {
+        setFilteredData(data);
+    }, [data]);
 
     // Função para mudar de página
     const changePage = (page) => {

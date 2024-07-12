@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../../components/table";
 import Dados, { acessos } from "./dados"
 import Modal from "../../components/modal/Modal";
 import { faSearch, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {req} from "../../interceptors"
+import { useAccount } from "../../hooks/useAccount";
 import "./Requisicao.css"
 
 const columns = [
-    { key: 'nome', alias: 'Requisição' },
-    { key: 'rg', alias: 'Item' },
-    { key: 'cpf', alias: 'Quem solicitou' },
+    { key: 'id', alias: 'Código' },
+    { key: 'item', alias: 'Item' },
+    { key: 'requestName', alias: 'Quem solicitou' },
+    { key: 'status', alias: 'Status' },
 ];
 
 const Requisicoes = () => {
+    const user = useAccount();
+    const [acesseRequets, setAcesseRequets] = useState([]);
+    const [groups,setGroups] = useState([]);
     const [selecteds, setSelecteds] = useState([]);
     const [animationClasses, setAnimationClasses] = useState({});
     const [acessFilter, setAcessFilter] = useState(acessos);
@@ -60,7 +66,61 @@ const Requisicoes = () => {
         });
     };
     console.log(filter);
+    useEffect(() => {
+        async function loadAcesseRequest() {
+            try {
+                const {data} = await req.get("AcesseRequest");
+                let dados = data.map(item => ({
+                    id: item.id,
+                    item: item.acesseRequest.groupAd.name,
+                    requestName: item.requesterEmployee.name,
+                    status: item.status.name,
+                }));
+                return(dados);
 
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        // async function loadEmployee() {
+        //     try {
+        //         const {data} = await req.get("AcesseRequest");
+        //         let dados = data.map(item => ({
+        //             id: item.id,
+        //             item: item.acesseRequest.groupAd.name,
+        //             requestName: item.requesterEmployee.name,
+        //             status: item.status.name,
+        //         }));
+        //         setAcesseRequets(dados);
+
+        //     } catch (e) {
+        //         console.log(e);
+        //     }
+        // }
+
+        async function loadGroup() {
+            try {
+                const {data} = await req.get("Group");
+                return (data)
+
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        async function loadDefaultData() {
+            try {
+              const [request, group] = await Promise.all([loadAcesseRequest(), loadGroup()]);
+              setAcesseRequets(request);
+              setAcessFilter(group);
+            } catch(e) {
+              console.log(e);
+            }
+          }
+          loadDefaultData();
+    },[])
+console.log(groups);
     return (
         <>
             <div></div>
@@ -73,7 +133,7 @@ const Requisicoes = () => {
                     <button onClick={openModal}>Criar Requisição</button>
                 </div>
 
-                <Table columns={columns} data={dados} />
+                <Table columns={columns} data={acesseRequets} />
             </section>
             <Modal show={showModal} onClose={closeModal}>
                 <div className="container-requisicao">
@@ -81,19 +141,19 @@ const Requisicoes = () => {
                     <div className="user-info">
                         <div className="info">
                             <label htmlFor="usuario">Usuário:</label>
-                            <span id="usuario">pedro.ramon</span>
+                            <span id="usuario">{user.login}</span>
                         </div>
                         <div className="info">
                             <label htmlFor="nome-completo">Nome Completo:</label>
-                            <span id="nome-completo">Pedro Ramon Rodrigues Lima</span>
+                            <span id="nome-completo">{user.name}</span>
                         </div>
                         <div className="info">
                             <label htmlFor="funcao">Função:</label>
-                            <span id="funcao">Analista de Suporte JR</span>
+                            <span id="funcao">{user.title}</span>
                         </div>
                         <div className="info">
                             <label htmlFor="gestor">Gestor:</label>
-                            <span id="gestor">Gleison Rubens</span>
+                            <span id="gestor">{user.manager}</span>
                         </div>
                     </div>
                     <div className="search-section">

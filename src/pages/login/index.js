@@ -21,8 +21,9 @@ const Login = () => {
             localStorage.setItem('token', token);
             const dataFromToken = jwtDecode(token);
             if (dataFromToken) {
-                if (dataFromToken.login){
-                    login(dataFromToken);
+                const employee = JSON.parse(dataFromToken.Employee);
+                if (employee){
+                    login(employee);
                     navigate("/app");
                 }else {
                     throw new Error('Autenticação não está funcionando!');

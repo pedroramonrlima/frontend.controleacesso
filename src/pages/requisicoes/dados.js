@@ -58,7 +58,7 @@ function gerarDadosAleatorios() {
     return `${nome} ${sobrenome}`;
   }
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 2; i++) {
     dados.push({
       nome: nomeAleatorio(),
       cpf: `${Math.floor(Math.random() * 999)}.${Math.floor(Math.random() * 999)}.${Math.floor(Math.random() * 999)}-00`,
