@@ -24,7 +24,9 @@ const Login = () => {
                 const employee = JSON.parse(dataFromToken.Employee);
                 if (employee){
                     login(employee);
-                    navigate("/app");
+                    setTimeout(() => {
+                        navigate("/app"); 
+                    }, 5000);
                 }else {
                     throw new Error('Autenticação não está funcionando!');
                 }
@@ -59,7 +61,7 @@ const Login = () => {
             }
         }
         removeTokenIfExists();
-        logout();
+        //logout();
     }, []);
 
     return (

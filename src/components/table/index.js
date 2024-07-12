@@ -3,100 +3,90 @@ import './Table.css';
 import { faArrowDownShortWide, faArrowUpShortWide, faFilter, faFilterCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Table = ({ columns, data, itemsPerPage = 10 }) => {
-    // State variables to manage filtering, sorting, and filtered data
-    const [filterColumn, setFilterColumn] = useState(null); // Coluna atualmente selecionada para filtragem
-    const [filterValue, setFilterValue] = useState(""); // Valor do filtro atual inserido pelo usuário
-    const [filteredData, setFilteredData] = useState(data); // Versão filtrada dos dados originais
-    const [sortColumn, setSortColumn] = useState(null); // Coluna atualmente ordenada
-    const [sortDirection, setSortDirection] = useState(null); // Direção de ordenação atual ('asc' ou 'desc')
-
-    // Estado para controle de paginação
+const Table = ({ columns, data, itemsPerPage = 10, children }) => {
+    const [filterColumn, setFilterColumn] = useState(null);
+    const [filterValue, setFilterValue] = useState("");
+    const [filteredData, setFilteredData] = useState([]);
+    const [sortColumn, setSortColumn] = useState(null);
+    const [sortDirection, setSortDirection] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(Math.ceil(data.length / itemsPerPage));
-    // Atualizar o total de páginas quando os dados filtrados mudarem
+    const [totalPages, setTotalPages] = useState(1);
+
     useEffect(() => {
-        setTotalPages(Math.ceil(filteredData.length / itemsPerPage));
+        if (filteredData.length > 0) {
+            setTotalPages(Math.ceil(filteredData.length / itemsPerPage));
+        } else {
+            setTotalPages(1);
+        }
     }, [filteredData, itemsPerPage]);
 
     useEffect(() => {
-        setFilteredData(data);
+        if (data) {
+            setFilteredData(data);
+        }
     }, [data]);
 
-    // Função para mudar de página
     const changePage = (page) => {
         setCurrentPage(page);
     };
 
-    // Função para avançar para a próxima página
     const nextPage = () => {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
         }
     };
 
-    // Função para voltar para a página anterior
     const prevPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
         }
     };
 
-    // Índices dos dados a serem exibidos na página atual
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-
-    // Function to handle filter column click
     const handleFilterClick = (column) => {
         if (filterColumn === column.key) {
-            // Limpar filtro se a coluna clicada já for a coluna de filtro selecionada
             setFilterColumn(null);
             setFilterValue("");
             setFilteredData(data);
         } else {
-            // Definir a coluna clicada como a nova coluna de filtro e redefinir os valores de filtro
             setFilterColumn(column.key);
             setFilterValue("");
-            setFilteredData(data);
+            const filtered = data.filter(item => item[column.key] && item[column.key].toString().toLowerCase().includes(filterValue.toLowerCase()));
+            setFilteredData(filtered);
         }
     };
 
-    // Function to handle filter input change
     const handleFilterChange = (e) => {
-        const value = e.target.value; // Obter o valor do filtro inserido
-        setFilterValue(value); // Atualizar o estado filterValue
-
-        // Filtrar dados com base na coluna de filtro selecionada e no valor inserido
+        const value = e.target.value;
+        setFilterValue(value);
         const filtered = data.filter((item) =>
             item[filterColumn].toString().toLowerCase().includes(value.toLowerCase())
         );
-        setFilteredData(filtered); // Atualizar o estado filteredData com os resultados filtrados
+        setFilteredData(filtered);
     };
 
-    // Function to handle sort column click
     const handleSortClick = (column) => {
-        let newSortDirection = 'asc'; // Direção de ordenação padrão
-
+        let newSortDirection = 'asc';
         if (sortColumn === column.key) {
-            // Inverter a direção de ordenação se a coluna clicada já for a coluna ordenada
             newSortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
         }
+        setSortColumn(column.key);
+        setSortDirection(newSortDirection);
 
-        setSortColumn(column.key); // Atualizar o estado sortColumn com a coluna clicada
-        setSortDirection(newSortDirection); // Atualizar o estado sortDirection com a nova direção
-
-        // Classificar os dados filtrados com base na coluna e direção de ordenação atuais
         const sorted = [...filteredData].sort((a, b) => {
             if (a[column.key] < b[column.key]) return newSortDirection === 'asc' ? -1 : 1;
             if (a[column.key] > b[column.key]) return newSortDirection === 'asc' ? 1 : -1;
             return 0;
         });
-
-        setFilteredData(sorted); // Atualizar o estado filteredData com os resultados ordenados
+        setFilteredData(sorted);
     };
 
-    // Renderizar apenas os dados da página atual
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
     const currentData = filteredData.slice(startIndex, endIndex);
+
+    if (!columns || columns.length === 0 || !currentData || currentData.length === 0) {
+        return null;
+    }
 
     return (
         <div className="table-container">
@@ -140,6 +130,11 @@ const Table = ({ columns, data, itemsPerPage = 10 }) => {
                                     {item[column.key]}
                                 </div>
                             ))}
+                            <div className="table-cell">
+                                {React.Children.map(children, (child) =>
+                                    React.cloneElement(child, { id: item.id })
+                                )}
+                            </div>
                         </div>
                     ))}
                 </div>
