@@ -9,7 +9,7 @@ export function useAccount() {
 
   useEffect(() => {
     if (user) {
-      console.log("useraccount", user);
+      //console.log("useraccount", user);
       const accountData = {
         login: user.login,
         name: user.name,

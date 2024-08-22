@@ -121,6 +121,11 @@ const Table = ({ columns, data, itemsPerPage = 10, children }) => {
                             )}
                         </div>
                     ))}
+                    {children && (
+                        <div className="header-cell">
+                            <div className="header-content">Ações</div>
+                        </div>
+                    )}
                 </div>
                 <div className="table-body">
                     {currentData.map((item, rowIndex) => (
@@ -130,11 +135,13 @@ const Table = ({ columns, data, itemsPerPage = 10, children }) => {
                                     {item[column.key]}
                                 </div>
                             ))}
-                            <div className="table-cell">
-                                {React.Children.map(children, (child) =>
-                                    React.cloneElement(child, { id: item.id })
-                                )}
-                            </div>
+                            {children && (
+                                <div className="table-cell">
+                                    {typeof children === 'function' ? children(item) : React.Children.map(children, (child) =>
+                                        React.cloneElement(child, { id: item.id })
+                                    )}
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>

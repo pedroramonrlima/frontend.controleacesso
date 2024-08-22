@@ -1,0 +1,26 @@
+.btn-box-table{
+    /* background-color: brown; */
+}
+
+.btn-box-table .btn-approve {
+    color: green;
+    text-decoration: none;
+    margin-right: 10px;
+    font-size: 1.9em;
+    cursor: pointer;
+}
+
+.btn-box-table .btn-approve:hover {
+    color: darkgreen;
+}
+
+.btn-box-table .btn-reject {
+    color: red;
+    font-size: 1.9em;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-box-table .btn-reject:hover {
+    color: darkred;
+}

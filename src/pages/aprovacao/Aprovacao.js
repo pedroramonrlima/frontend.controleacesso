@@ -4,17 +4,22 @@ import { req } from "../../interceptors"
 import { useAccount } from "../../hooks/useAccount";
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Alert from "../../components/alert/Alert";
+import "./aprovacao.css";
 
 const col = [
     { key: 'id', alias: 'Código' },
     { key: 'item', alias: 'Item' },
     { key: 'requestName', alias: 'Quem solicitou' },
-    { key: 'status', alias: 'Status' }
+    { key: 'status', alias: 'Status' },
 ];
 
 const Aprovacao = () => {
     const user = useAccount();
     const [requestsEspecialis, setRequestsEspecialis] = useState([]);
+    const [sync, setSync] = useState(false);
+    const [alert, setAlert] = useState({ message: "", errors: [], type: "" }); 
+
 
     useEffect(() => {
         async function loadAcesseRequestEspecialist() {
@@ -24,24 +29,90 @@ const Aprovacao = () => {
                     id: item.id,
                     item: item.acesseRequest.groupAd.name,
                     requestName: item.acesseRequest.employee.name,
-                    status: item.status.name
+                    status: item.status.name,
+                    statusId: item.statusRequestId
                 }));
                 //console.log("teste",dados);
-                setRequestsEspecialis(dados);
+                return dados;
             } catch (e) {
                 console.log(e);
+                if(e.response.status ===401){
+                    //navigate("/");
+                    setAlert({ message: "Erro de autenticacao", type: "error" });
+                }
             }
         }
-        loadAcesseRequestEspecialist();
-    }, [])
+        async function loadAcesseRequestManager() {
+            try {
+                const { data } = await req.get("Approval/list-manager");
+                let dados = data.map(item => ({
+                    id: item.id,
+                    item: item.acesseRequest.groupAd.name,
+                    requestName: item.acesseRequest.employee.name,
+                    status: item.status.name,
+                    statusId: item.statusRequestId
+                }));
+                //console.log("manager",data);
+                //console.log("teste",dados);
+                return dados;
+            } catch (e) {
+                console.log(e);
+                if(e.response.status ===401){
+                    //navigate("/");
+                    setAlert({ message: "Erro de autenticacao", type: "error" });
+                }
+            }
+        }
 
-    const handleApprove = (id) => {
-        console.log(`Approved request with id ${id}`);
+        async function loadDefaultData() {
+            try {
+              const [especialists, managers] = await Promise.all([loadAcesseRequestEspecialist(), loadAcesseRequestManager()]);
+              let requests = [...especialists, ...managers];
+              setRequestsEspecialis(requests);
+            } catch(e) {
+              console.log(e);
+            }
+        }
+
+        loadDefaultData();
+    }, [sync])
+
+    async function handleApprove(id){
+        try {
+            let request = {...requestsEspecialis.find(request => request.id === id),isApproved:true}
+            console.log("requisição", request);
+            if(request.statusId === 1){
+                console.log(await req.post("Approval/approve-manager", request));
+            }else {
+                console.log(await req.post("Approval/approve-especialista", request));
+            }
+
+            setSync(!sync);
+            setAlert({ message: `Requisição ${id} foi aprovada!`, type: "success" });
+        }catch(e){
+            console.log(e);
+        }
     };
 
-    const handleReject = (id) => {
-        console.log(`Rejected request with id ${id}`);
+    async function handleReject(id){
+        try {
+            let request = {...requestsEspecialis.find(request => request.id === id),isApproved:false}
+            if(request.statusId === 1){
+                console.log(await req.post("Approval/approve-manager", request));
+            }else {
+                console.log(await req.post("Approval/approve-especialista", request));
+            }
+            setSync(!sync);
+            setAlert({ message: `Requisição ${id} foi reprovada!`, type: "success" });
+        }catch(e){
+            console.log(e);
+        }
     };
+
+    console.log(requestsEspecialis);
+    const closeAlert = () => {
+        setAlert({ message: "", errors: [], type: "" });
+      };
 
     return (
         <>
@@ -52,16 +123,20 @@ const Aprovacao = () => {
             </section>
             <section className="page-box-container">
                 <Table columns={col} data={requestsEspecialis}>
-                    <div className="btn-box-table">
-                        <a onClick={() => handleApprove(requestsEspecialis.id)}>
-                            <FontAwesomeIcon icon={faThumbsUp} />
-                        </a>
-                        <a onClick={() => handleReject(requestsEspecialis.id)}>
-                            <FontAwesomeIcon icon={faThumbsDown} />
-                        </a>
-                    </div>
+                    {({ id }) => (
+                        <div className="btn-box-table">
+                            <a onClick={() => handleApprove(id)} className="btn-approve">
+                                <FontAwesomeIcon icon={faThumbsUp} />
+                            </a>
+                            <a onClick={() => handleReject(id)} className="btn-reject">
+                                <FontAwesomeIcon icon={faThumbsDown} />
+                            </a>
+                        </div>
+                    )}
                 </Table>
             </section>
+            <Alert message={alert.message} errors={alert.errors} type={alert.type} onClose={closeAlert} />
+
         </>
     );
 }

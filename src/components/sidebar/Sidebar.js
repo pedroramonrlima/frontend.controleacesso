@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { faHouse, faBook, faUser, faThumbsUp, faBars, faUserGroup, faGear, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faBook, faUser, faThumbsUp, faBars, faUserGroup, faGear, faChevronDown, faBan } from '@fortawesome/free-solid-svg-icons';
 import MenuItem from "../manuitem/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAccount } from "../../hooks/useAccount";
@@ -55,7 +55,10 @@ const Sidebar = () => {
           <MenuItem icon={faUser} text="Solicitar Usuário" route="/app/solicitacao-usuario" />
           <MenuItem icon={faBook} text="Requisições de Acesso" route="/app/requisicao-acesso" />
           {(user.isManager || user.isSpecialist) && (
-            <MenuItem icon={faThumbsUp} text="Aprovar/Reprovar" route="/app/aprovacao-reprovacao" />
+            <>
+              <MenuItem icon={faThumbsUp} text="Aprovar/Reprovar" route="/app/aprovacao-reprovacao" />
+              <MenuItem icon={faBan} text="Revogar Acessos" route="/app/revogar" />
+            </>
           )}
           {user.isAdmin && (
             <li>

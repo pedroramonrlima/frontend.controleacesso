@@ -89,11 +89,20 @@ const Requisicoes = () => {
                 setAlert({ message: "Requisição enviada com sucesso!", type: "success" });
             }
         } catch (error) {
+            console.log(error);
             const {errors} = error.response.data;
-            if(errors){
+            console.log("RETORNO ERRO ",errors);
+            if(errors.every(item => typeof item === 'string')){
                 setAlert({
                     message: "Erro ao enviar requisição",
                     errors: errors,
+                    type: "error"
+                  }); 
+            }else if(errors){
+                const mapErrors = errors.map(item => item.errorMessage);
+                setAlert({
+                    message: "Erro ao enviar requisição",
+                    errors: mapErrors,
                     type: "error"
                   }); 
             }else {
@@ -122,7 +131,7 @@ const Requisicoes = () => {
                 return(dados);
 
             } catch (e) {
-                console.log(e);
+                throw e;
             }
         }
 
@@ -132,22 +141,26 @@ const Requisicoes = () => {
                 return (data)
 
             } catch (e) {
-                console.log(e);
+                throw e;
             }
         }
 
         async function loadDefaultData() {
             try {
-              const [request, group] = await Promise.all([loadAcesseRequest(), loadGroup()]);
-              setAcesseRequets(request);
-              setAcessFilter(group);
-              setGroups(group);
-            } catch(e) {
-              console.log(e);
+                const [request, group] = await Promise.all([loadAcesseRequest(), loadGroup()]);
+                setAcesseRequets(request);
+                setAcessFilter(group);
+                setGroups(group);
+            } catch (e) {
+                console.log(e);
+                if (e.response.status === 401) {
+                    //navigate("/");
+                    setAlert({ message: "Erro de autenticacao", type: "error" });
+                }
             }
-          }
-          loadDefaultData();
-    },[sync])
+        }
+        loadDefaultData();
+    }, [sync])
     
     const closeAlert = () => {
         setAlert({ message: "", errors: [], type: "" });

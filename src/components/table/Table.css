@@ -17,34 +17,29 @@
     overflow: hidden;
 }
 
-.table-header {
+.table-header, .table-row {
     display: flex;
+}
+
+.header-cell, .table-cell {
+    flex: 1;
+    min-width: 100px; /* Define a largura mínima para as colunas */
+    max-width: 20%; /* Define a largura máxima para as colunas */
+    padding: 12px 15px;
+    box-sizing: border-box;
+}
+
+.table-header {
     background-color: #25396f;
     color: #ffffff;
-}
-
-.header-cell {
-    flex: 1;
-    padding: 12px 15px;
-}
-
-.table-body {
-    display: flex;
-    flex-direction: column;
-}
-
-.table-row {
-    display: flex;
-    border-bottom: 1px solid #dddddd;
 }
 
 .table-row:nth-of-type(even) {
     background-color: #f3f3f3;
 }
 
-.table-cell {
-    flex: 1;
-    padding: 12px 15px;
+.table-row {
+    border-bottom: 1px solid #dddddd;
 }
 
 .header-content {
